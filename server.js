@@ -4,19 +4,18 @@ const cors = require("cors");
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 app.use(express.static("public"));
 
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
-  database: "gis_webapp", // ĐỔI nếu DB bạn tên khác
+  database: "gis_webapp",
   password: "scoping01",
-  port: 5432,
+  port: 5432
 });
 
-
-
-/* ===== LẤY TẤT CẢ NHÀ TRỌ ===== */
+/* ALL */
 app.get("/all", async (req, res) => {
   const sql = `
     SELECT id, ten, gia,
@@ -24,14 +23,27 @@ app.get("/all", async (req, res) => {
       ST_X(geom::geometry) AS lng
     FROM nhatro;
   `;
-  const result = await pool.query(sql);
-  res.json(result.rows);
+  const r = await pool.query(sql);
+  res.json(r.rows);
+});
+/* ===== SEARCH FILTER ===== */
+document.getElementById("searchBox").addEventListener("input", e => {
+  const kw = e.target.value.toLowerCase();
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    if (card.innerText.toLowerCase().includes(kw)) {
+      card.style.display = "";
+    } else {
+      card.style.display = "none";
+    }
+  });
 });
 
-/* ===== TÌM THEO BÁN KÍNH ===== */
+
+/* SEARCH */
 app.get("/search", async (req, res) => {
   const { lat, lng, radius } = req.query;
-
   const sql = `
     SELECT id, ten, gia,
       ST_Y(geom::geometry) AS lat,
@@ -43,9 +55,25 @@ app.get("/search", async (req, res) => {
       $3
     );
   `;
+  const r = await pool.query(sql, [lng, lat, radius]);
+  res.json(r.rows);
+});
 
-  const result = await pool.query(sql, [lng, lat, radius]);
-  res.json(result.rows);
+/* ADD */
+app.post("/add", async (req, res) => {
+  const { ten, gia, lat, lng } = req.body;
+  const sql = `
+    INSERT INTO nhatro (ten, gia, geom)
+    VALUES ($1, $2, ST_SetSRID(ST_MakePoint($3,$4),4326)::geography);
+  `;
+  await pool.query(sql, [ten, gia, lng, lat]);
+  res.json({ ok: true });
+});
+
+/* DELETE */
+app.delete("/delete/:id", async (req, res) => {
+  await pool.query("DELETE FROM nhatro WHERE id=$1", [req.params.id]);
+  res.json({ ok: true });
 });
 
 app.listen(3000, () => {

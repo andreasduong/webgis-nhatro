@@ -2,24 +2,100 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
-  <title>WebGIS – Nhà trọ & Routing</title>
+  <title>WebGIS – Tìm nhà trọ</title>
 
   <link
     rel="stylesheet"
-    href="https://unpkg.com/leaflet/dist/leaflet.css"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   />
 
   <style>
-    body { margin: 0; }
-    #map { height: 100vh; width: 100vw; }
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    #map {
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* SEARCH BOX – dịch sang phải để tránh zoom */
+    #searchBox {
+      position: absolute;
+      top: 10px;
+      left: 80px; /* QUAN TRỌNG */
+      z-index: 1000;
+      padding: 6px 8px;
+      width: 240px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    /* LIST BOX – nổi trên map, dịch phải */
+    #listBox {
+      position: absolute;
+      top: 52px;
+      left: 80px; /* QUAN TRỌNG */
+      z-index: 1000;
+      width: 300px;
+      max-height: 320px;
+      overflow-y: auto;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      font-size: 13px;
+    }
+
+    #list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      padding: 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      background: #fafafa;
+    }
+
+    .card:hover {
+      background: #eef6ff;
+    }
+
+    .hint {
+      font-style: italic;
+      color: #666;
+      margin-bottom: 6px;
+    }
   </style>
 </head>
 <body>
 
-<div id="map"></div>
+  <!-- SEARCH -->
+  <input
+    id="searchBox"
+    type="text"
+    placeholder="Gõ địa điểm rồi Enter (vd: Ba Đình)"
+  />
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="script.js"></script>
+  <!-- LIST -->
+  <div id="listBox">
+    <div class="hint">Click bản đồ để tìm nhà trọ gần bạn</div>
+    <div id="list"></div>
+  </div>
 
+  <!-- MAP -->
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
