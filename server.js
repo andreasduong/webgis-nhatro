@@ -26,20 +26,6 @@ app.get("/all", async (req, res) => {
   const r = await pool.query(sql);
   res.json(r.rows);
 });
-/* ===== SEARCH FILTER ===== */
-document.getElementById("searchBox").addEventListener("input", e => {
-  const kw = e.target.value.toLowerCase();
-  const cards = document.querySelectorAll(".card");
-
-  cards.forEach(card => {
-    if (card.innerText.toLowerCase().includes(kw)) {
-      card.style.display = "";
-    } else {
-      card.style.display = "none";
-    }
-  });
-});
-
 
 /* SEARCH */
 app.get("/search", async (req, res) => {
@@ -51,7 +37,7 @@ app.get("/search", async (req, res) => {
     FROM nhatro
     WHERE ST_DWithin(
       geom,
-      ST_MakePoint($1, $2)::geography,
+      ST_MakePoint($1,$2)::geography,
       $3
     );
   `;

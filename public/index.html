@@ -21,11 +21,10 @@
       width: 100vw;
     }
 
-    /* SEARCH BOX – dịch sang phải để tránh zoom */
     #searchBox {
       position: absolute;
       top: 10px;
-      left: 80px; /* QUAN TRỌNG */
+      left: 80px;
       z-index: 1000;
       padding: 6px 8px;
       width: 240px;
@@ -35,11 +34,10 @@
       font-size: 14px;
     }
 
-    /* LIST BOX – nổi trên map, dịch phải */
     #listBox {
       position: absolute;
       top: 52px;
-      left: 80px; /* QUAN TRỌNG */
+      left: 80px;
       z-index: 1000;
       width: 300px;
       max-height: 320px;
@@ -79,20 +77,17 @@
 </head>
 <body>
 
-  <!-- SEARCH -->
   <input
     id="searchBox"
     type="text"
     placeholder="Gõ địa điểm rồi Enter (vd: Ba Đình)"
   />
 
-  <!-- LIST -->
   <div id="listBox">
     <div class="hint">Click bản đồ để tìm nhà trọ gần bạn</div>
     <div id="list"></div>
   </div>
 
-  <!-- MAP -->
   <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

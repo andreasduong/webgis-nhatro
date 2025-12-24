@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", () => {
+
 /* ================= ICON ================= */
 const blueIcon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -30,75 +32,56 @@ let circle = null;
 let routeLine = null;
 
 const SEARCH_RADIUS = 3000;
-const markers = {}; // id -> marker
+const markers = {};
 
 const listDiv = document.getElementById("list");
 const hintDiv = document.querySelector(".hint");
 const searchBox = document.getElementById("searchBox");
 
-/* ================= LOAD ALL NHÀ TRỌ ================= */
+/* ================= LOAD ALL ================= */
 async function loadAll() {
   const res = await fetch("/all");
   const data = await res.json();
 
   data.forEach(p => {
     const m = L.marker([p.lat, p.lng], { icon: blueIcon })
-      .bindPopup(
-        `<b>${p.ten}</b><br>
-         Giá: ${p.gia.toLocaleString()} VND`
-      )
+      .bindPopup(`<b>${p.ten}</b><br>Giá: ${p.gia.toLocaleString()} VND`)
       .on("click", () => {
-        if (centerMarker) {
-          drawRoute(p.lat, p.lng);
-        }
+        if (centerMarker) drawRoute(p.lat, p.lng);
       })
       .addTo(map);
 
     markers[p.id] = m;
   });
 }
-
 loadAll();
 
-/* ================= GEOCODING (ENTER) ================= */
+/* ================= SEARCH FILTER ================= */
+searchBox.addEventListener("input", () => {
+  const kw = searchBox.value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card => {
+    card.style.display = card.innerText.toLowerCase().includes(kw)
+      ? ""
+      : "none";
+  });
+});
+
+/* ================= GEOCODING ================= */
 searchBox.addEventListener("keydown", async (e) => {
   if (e.key !== "Enter") return;
-
   const q = searchBox.value.trim();
   if (!q) return;
 
-  // Giới hạn Việt Nam + ưu tiên Hà Nội
   const url =
     "https://nominatim.openstreetmap.org/search" +
-    "?format=json" +
-    `&q=${encodeURIComponent(q)}` +
-    "&countrycodes=vn" +
-    "&limit=1" +
-    "&viewbox=105.7,21.2,106.0,20.9" +
-    "&bounded=1";
+    "?format=json&q=" + encodeURIComponent(q) +
+    "&countrycodes=vn&limit=1";
 
-  try {
-    const res = await fetch(url, {
-      headers: {
-        "Accept-Language": "vi"
-      }
-    });
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!data.length) return alert("Không tìm thấy");
 
-    const data = await res.json();
-
-    if (!data || data.length === 0) {
-      alert("Không tìm thấy địa điểm");
-      return;
-    }
-
-    const lat = parseFloat(data[0].lat);
-    const lng = parseFloat(data[0].lon);
-
-    map.setView([lat, lng], 14);
-
-  } catch (err) {
-    alert("Lỗi tìm kiếm địa điểm");
-  }
+  map.setView([+data[0].lat, +data[0].lon], 14);
 });
 
 /* ================= CLICK MAP ================= */
@@ -107,14 +90,17 @@ map.on("click", async (e) => {
 
   if (centerMarker) map.removeLayer(centerMarker);
   if (circle) map.removeLayer(circle);
-  if (routeLine) map.removeLayer(routeLine);
+  if (routeLine) {
+    map.removeLayer(routeLine);
+    routeLine = null;
+  }
 
   listDiv.innerHTML = "";
-  if (hintDiv) hintDiv.style.display = "none";
+  hintDiv.style.display = "none";
 
   centerMarker = L.marker([lat, lng], { icon: redIcon })
-    .bindPopup("Vị trí của bạn")
     .addTo(map)
+    .bindPopup("Vị trí của bạn")
     .openPopup();
 
   circle = L.circle([lat, lng], {
@@ -123,25 +109,17 @@ map.on("click", async (e) => {
     fillOpacity: 0.1
   }).addTo(map);
 
-  const res = await fetch(
-    `/search?lat=${lat}&lng=${lng}&radius=${SEARCH_RADIUS}`
-  );
+  const res = await fetch(`/search?lat=${lat}&lng=${lng}&radius=${SEARCH_RADIUS}`);
   const data = await res.json();
 
   data.forEach(p => {
-    const m = markers[p.id];
-    if (!m) return;
-
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `
-      <b>${p.ten}</b><br>
-      ${p.gia.toLocaleString()} VND
-    `;
+    card.innerHTML = `<b>${p.ten}</b><br>${p.gia.toLocaleString()} VND`;
 
     card.onclick = () => {
       map.setView([p.lat, p.lng], 15);
-      m.openPopup();
+      markers[p.id].openPopup();
       drawRoute(p.lat, p.lng);
     };
 
@@ -153,6 +131,12 @@ map.on("click", async (e) => {
 async function drawRoute(destLat, destLng) {
   if (!centerMarker) return;
 
+  // 🔥 XOÁ ROUTE CŨ TRƯỚC KHI VẼ MỚI
+  if (routeLine) {
+    map.removeLayer(routeLine);
+    routeLine = null;
+  }
+
   const start = centerMarker.getLatLng();
 
   const url =
@@ -160,24 +144,16 @@ async function drawRoute(destLat, destLng) {
     `${start.lng},${start.lat};${destLng},${destLat}` +
     `?overview=full&geometries=geojson`;
 
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!data.routes || !data.routes.length) return;
 
-    if (!data.routes || data.routes.length === 0) return;
+  const coords = data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
 
-    const coords = data.routes[0].geometry.coordinates.map(
-      c => [c[1], c[0]]
-    );
-
-    if (routeLine) map.removeLayer(routeLine);
-
-    routeLine = L.polyline(coords, {
-      color: "blue",
-      weight: 4
-    }).addTo(map);
-
-  } catch (err) {
-    console.error("Routing error", err);
-  }
+  routeLine = L.polyline(coords, {
+    color: "blue",
+    weight: 4
+  }).addTo(map);
 }
+
+});
