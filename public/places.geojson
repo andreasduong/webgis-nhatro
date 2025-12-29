@@ -1,0 +1,35 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hồ Gươm"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [105.8542, 21.0285]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ba Đình"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [105.8142, 21.0333]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cầu Giấy"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [105.7909, 21.0368]
+      }
+    }
+  ]
+}
