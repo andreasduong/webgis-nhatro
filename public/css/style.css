@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+#map {
+  height: 100vh;
+  width: 100vw;
+}
+
+#searchBox {
+  position: absolute;
+  top: 10px;
+  left: 80px;
+  z-index: 1000;
+
+  padding: 6px 8px;
+  width: 220px;
+
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#locateBtn {
+  position: absolute;
+  top: 10px;
+  left: 310px;
+
+  z-index: 1000;
+
+  padding: 6px 10px;
+
+  border-radius: 6px;
+  border: 1px solid #ccc;
+
+  background: #fff;
+  cursor: pointer;
+}
+
+#listBox {
+  position: absolute;
+  top: 52px;
+  left: 80px;
+
+  z-index: 1000;
+
+  width: 300px;
+  max-height: 300px;
+
+  background: #fff;
+
+  border-radius: 8px;
+  padding: 8px;
+
+  overflow-y: auto;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.card {
+  border: 1px solid #ddd;
+
+  padding: 6px;
+  margin-bottom: 6px;
+
+  cursor: pointer;
+}
+
+.card:hover {
+  background: #eef6ff;
+}
+
+.hint {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 6px;
+}
