@@ -1,42 +1,137 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>WebGIS – Tìm nhà trọ</title>
+    <title>WebGIS - Tìm Nhà Trọ</title>
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
 
-  <link rel="stylesheet" href="css/style.css" />
+    <!-- Custom CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    />
 </head>
-
 <body>
 
-  <input
-    id="searchBox"
-    placeholder="Gõ địa danh (vd: Hồ Gươm)"
-  />
+    <!-- =========================
+         SEARCH BAR
+    ========================== -->
 
-  <button id="locateBtn">
-    📍
-  </button>
+    <div class="search-area">
 
-  <div id="listBox">
-    <div class="hint">
-      Click bản đồ nếu không tìm được vị trí
+        <input
+            type="text"
+            id="searchBox"
+            placeholder="Nhập địa danh (VD: Hồ Gươm, Cầu Giấy...)"
+        >
+
+        <button
+            id="locateBtn"
+            title="Lấy vị trí hiện tại"
+        >
+            📍
+        </button>
+
     </div>
 
-    <div id="list"></div>
-  </div>
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
 
-  <div id="map"></div>
+    <div id="sidebar">
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <div class="filterBox">
 
-<script type="module" src="js/main.js"></script>
+            <h3>🔍 Bộ lọc tìm nhà trọ</h3>
+
+            <label for="maxPrice">
+                Giá tối đa (VND)
+            </label>
+
+            <input
+                type="number"
+                id="maxPrice"
+                value="5000000"
+                min="0"
+            >
+
+            <label for="minArea">
+                Diện tích tối thiểu (m²)
+            </label>
+
+            <input
+                type="number"
+                id="minArea"
+                value="20"
+                min="0"
+            >
+
+            <label for="minPeople">
+                Số người tối thiểu
+            </label>
+
+            <input
+                type="number"
+                id="minPeople"
+                value="1"
+                min="1"
+            >
+
+            <button id="filterBtn">
+                Áp dụng bộ lọc
+            </button>
+
+        </div>
+
+        <div class="hint">
+            Chọn vị trí trên bản đồ hoặc sử dụng thanh tìm kiếm để tìm nhà trọ gần khu vực mong muốn.
+        </div>
+
+        <!-- Danh sách kết quả -->
+        <div id="list">
+
+            <!-- Ví dụ card mẫu -->
+
+            <!--
+            <div class="card">
+                <h4>Nhà trọ A</h4>
+                <p>Giá: 3.500.000 VND</p>
+                <p>Diện tích: 25 m²</p>
+                <p>Sức chứa: 2 người</p>
+            </div>
+            -->
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         MAP
+    ========================== -->
+
+    <div id="map"></div>
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <!-- Leaflet -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <!-- Main JS -->
+    <script
+        type="module"
+        src="js/main.js">
+    </script>
 
 </body>
 </html>

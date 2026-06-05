@@ -1,78 +1,275 @@
 body {
-  margin: 0;
-  height: 100vh;
-  font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
 }
 
+/* =========================
+   MAP
+========================= */
+
 #map {
-  height: 100vh;
-  width: 100vw;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
+
+.search-area {
+    position: absolute;
+
+    top: 15px;
+    left: 15px;
+
+    z-index: 1000;
+
+    display: flex;
+    gap: 8px;
+
+    width: 360px;
+
+    padding: 8px;
+
+    background: white;
+
+    border-radius: 12px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 #searchBox {
-  position: absolute;
-  top: 10px;
-  left: 80px;
-  z-index: 1000;
+    flex: 1;
 
-  padding: 6px 8px;
-  width: 220px;
+    padding: 10px;
 
-  border-radius: 6px;
-  border: 1px solid #ccc;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+#searchBox:focus {
+    outline: none;
+    border-color: #1976d2;
 }
 
 #locateBtn {
-  position: absolute;
-  top: 10px;
-  left: 310px;
+    padding: 10px 14px;
 
-  z-index: 1000;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 
-  padding: 6px 10px;
+    background: white;
 
-  border-radius: 6px;
-  border: 1px solid #ccc;
+    cursor: pointer;
 
-  background: #fff;
-  cursor: pointer;
+    transition: 0.2s;
 }
 
-#listBox {
-  position: absolute;
-  top: 52px;
-  left: 80px;
-
-  z-index: 1000;
-
-  width: 300px;
-  max-height: 300px;
-
-  background: #fff;
-
-  border-radius: 8px;
-  padding: 8px;
-
-  overflow-y: auto;
-
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+#locateBtn:hover {
+    background: #f2f7ff;
 }
+
+/* =========================
+   SIDEBAR
+========================= */
+
+#sidebar {
+    position: absolute;
+
+    top: 80px;
+    left: 15px;
+
+    z-index: 1000;
+
+    width: 360px;
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+    max-height: calc(100vh - 100px);
+
+    overflow-y: auto;
+}
+
+/* =========================
+   FILTER
+========================= */
+
+.filterBox {
+    margin-bottom: 16px;
+}
+
+.filterBox h3 {
+    margin-top: 0;
+    margin-bottom: 14px;
+
+    font-size: 18px;
+}
+
+.filterBox label {
+    display: block;
+
+    margin-top: 10px;
+    margin-bottom: 5px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.filterBox input {
+    width: 100%;
+
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+.filterBox input:focus {
+    outline: none;
+    border-color: #1976d2;
+}
+
+/* Nút lọc */
+
+#filterBtn {
+    width: 100%;
+
+    margin-top: 14px;
+
+    padding: 11px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #1976d2;
+    color: white;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+#filterBtn:hover {
+    background: #1565c0;
+}
+
+/* =========================
+   HINT
+========================= */
+
+.hint {
+    color: #666;
+    font-style: italic;
+
+    margin-bottom: 12px;
+
+    font-size: 13px;
+}
+
+/* =========================
+   LIST
+========================= */
+
+#list {
+    margin-top: 10px;
+}
+
+/* =========================
+   RENTAL CARD
+========================= */
 
 .card {
-  border: 1px solid #ddd;
+    background: white;
 
-  padding: 6px;
-  margin-bottom: 6px;
+    border-radius: 10px;
 
-  cursor: pointer;
+    padding: 12px;
+
+    margin-bottom: 10px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
 }
 
 .card:hover {
-  background: #eef6ff;
+    background: #eef6ff;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
-.hint {
-  font-style: italic;
-  color: #666;
-  margin-bottom: 6px;
+.card h4 {
+    margin: 0 0 6px 0;
+
+    font-size: 16px;
+}
+
+.card p {
+    margin: 4px 0;
+
+    color: #555;
+
+    font-size: 14px;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+#sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+    background: #c7c7c7;
+    border-radius: 10px;
+}
+
+#sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .search-area {
+        width: calc(100% - 20px);
+        left: 10px;
+        right: 10px;
+    }
+
+    #sidebar {
+        width: calc(100% - 20px);
+
+        left: 10px;
+        right: 10px;
+
+        max-height: 60vh;
+    }
 }
