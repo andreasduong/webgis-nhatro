@@ -17,12 +17,11 @@ body {
 /* =========================
    SEARCH BAR
 ========================= */
-
 .search-area {
     position: absolute;
 
     top: 15px;
-    left: 15px;
+    left: 70px;   /* thay từ 15px → 70px, né nút zoom (+/-) bên trái */
 
     z-index: 1000;
 
@@ -81,7 +80,7 @@ body {
     position: absolute;
 
     top: 80px;
-    left: 15px;
+    left: 70px;
 
     z-index: 1000;
 
@@ -259,17 +258,15 @@ body {
 @media (max-width: 768px) {
 
     .search-area {
-        width: calc(100% - 20px);
-        left: 10px;
+        width: calc(100% - 80px);
+        left: 70px;
         right: 10px;
     }
 
     #sidebar {
-        width: calc(100% - 20px);
-
-        left: 10px;
+        width: calc(100% - 80px);
+        left: 70px;
         right: 10px;
-
         max-height: 60vh;
     }
 }

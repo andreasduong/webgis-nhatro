@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -18,6 +19,7 @@
         href="css/style.css"
     />
 </head>
+
 <body>
 
     <!-- =========================
@@ -30,6 +32,7 @@
             type="text"
             id="searchBox"
             placeholder="Nhập địa danh (VD: Hồ Gươm, Cầu Giấy...)"
+            autocomplete="off"
         >
 
         <button
@@ -60,6 +63,7 @@
                 id="maxPrice"
                 value="5000000"
                 min="0"
+                placeholder="Ví dụ: 5000000"
             >
 
             <label for="minArea">
@@ -71,6 +75,7 @@
                 id="minArea"
                 value="20"
                 min="0"
+                placeholder="Ví dụ: 20"
             >
 
             <label for="minPeople">
@@ -82,6 +87,7 @@
                 id="minPeople"
                 value="1"
                 min="1"
+                placeholder="Ví dụ: 2"
             >
 
             <button id="filterBtn">
@@ -95,6 +101,7 @@
         </div>
 
         <!-- Danh sách kết quả -->
+
         <div id="list">
 
             <!-- Ví dụ card mẫu -->
@@ -116,7 +123,10 @@
          MAP
     ========================== -->
 
-    <div id="map"></div>
+    <div
+        id="map"
+        aria-label="Bản đồ tìm nhà trọ"
+    ></div>
 
     <!-- =========================
          JAVASCRIPT

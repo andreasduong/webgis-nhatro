@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Quản trị - WebGIS Tìm Kiếm Nhà Trọ</title>
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+
+        <h1>WEBGIS TÌM KIẾM NHÀ TRỌ</h1>
+
+        <p>Hệ thống hỗ trợ tìm kiếm và quản lý nhà trọ</p>
+
+    </div>
+
+    <div class="user-role">
+
+        👤 Quản trị viên
+
+    </div>
+
+</header>
+
+<nav>
+
+    <a href="index.html">
+
+        🗺 Người dùng
+
+    </a>
+
+    <a
+        href="admin.html"
+        class="active">
+
+        ⚙ Quản trị
+
+    </a>
+
+</nav>
+
+<main>
+
+    <!-- DANH SÁCH -->
+
+    <section class="list-section">
+
+        <div class="section-header">
+
+            <h2>
+
+                Danh sách nhà trọ
+
+            </h2>
+
+            <button id="addBtn">
+
+                + Thêm nhà trọ
+
+            </button>
+
+        </div>
+
+        <div id="motelList">
+
+            <!-- admin.js render card tại đây -->
+
+        </div>
+
+    </section>
+
+    <!-- FORM -->
+
+    <section class="form-section">
+
+        <h2 id="formTitle">
+
+            Thêm nhà trọ
+
+        </h2>
+
+        <input
+            id="motelId"
+            type="hidden">
+
+        <label>
+
+            Tên nhà trọ
+
+        </label>
+
+        <input
+            id="ten"
+            type="text">
+
+        <label>
+
+            Giá (VND)
+
+        </label>
+
+        <input
+            id="gia"
+            type="number">
+
+        <label>
+
+            Diện tích (m²)
+
+        </label>
+
+        <input
+            id="dientich"
+            type="number">
+
+        <label>
+
+            Số người tối đa
+
+        </label>
+
+        <input
+            id="songuoi"
+            type="number">
+
+        <label>
+
+            Số điện thoại
+
+        </label>
+
+        <input
+            id="sdt"
+            type="text">
+
+        <label>
+
+            Địa chỉ
+
+        </label>
+
+        <input
+            id="diachi"
+            type="text">
+
+        <label>
+
+            Mô tả
+
+        </label>
+
+        <textarea
+            id="mota"
+            rows="4"></textarea>
+
+        <label>
+
+            Latitude
+
+        </label>
+
+        <input
+            id="lat"
+            type="number"
+            step="any">
+
+        <label>
+
+            Longitude
+
+        </label>
+
+        <input
+            id="lng"
+            type="number"
+            step="any">
+
+        <div class="button-group">
+
+            <button id="saveBtn">
+
+                💾 Lưu
+
+            </button>
+
+            <button id="cancelBtn">
+
+                Hủy
+
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+
+    Đồ án tốt nghiệp • WebGIS tìm kiếm nhà trọ
+
+</footer>
+
+<script
+    type="module"
+    src="js/admin.js">
+
+</script>
+
+</body>
+
+</html>
