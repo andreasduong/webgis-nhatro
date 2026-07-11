@@ -22,11 +22,33 @@ import {
   minPeople
 } from "./ui.js";
 
+const searchName =
+  document.getElementById("searchName");
+
 export function renderResults(data) {
 
   listDiv.innerHTML = "";
 
-  data.forEach(p => {
+  const keyword =
+    searchName
+      ? searchName.value.trim().toLowerCase()
+      : "";
+
+  const filtered =
+    data.filter(p =>
+      p.ten.toLowerCase().includes(keyword)
+    );
+
+  if (filtered.length === 0) {
+
+    listDiv.innerHTML =
+      "<p>Không tìm thấy nhà trọ.</p>";
+
+    return;
+
+  }
+
+  filtered.forEach(p => {
 
     const card =
       createCard(
@@ -38,9 +60,7 @@ export function renderResults(data) {
             15
           );
 
-          state
-            .markers[p.id]
-            .openPopup();
+          state.markers[p.id].openPopup();
 
           drawRoute(
             p.lat,
@@ -129,6 +149,27 @@ export async function doSearch(
       minPeople.value
     );
 
-  renderResults(data);
+  state.lastResults = data;
+
+renderResults(data);
+
+}
+
+if (searchName) {
+
+  searchName.addEventListener(
+    "input",
+    () => {
+
+      if (state.lastResults) {
+
+        renderResults(
+          state.lastResults
+        );
+
+      }
+
+    }
+  );
 
 }

@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>WebGIS - Tìm Nhà Trọ</title>
+    <title>Web tìm kiếm nhà trọ</title>
+    <link rel="icon" href="assets/icon-nhatro.jpeg">
+
 
     <!-- Leaflet CSS -->
     <link
@@ -50,74 +52,83 @@
 
     <div id="sidebar">
 
-        <div class="filterBox">
+    <!-- =========================
+         BỘ LỌC
+    ========================== -->
 
-            <h3>🔍 Bộ lọc tìm nhà trọ</h3>
+    <div class="filterBox">
 
-            <label for="maxPrice">
-                Giá tối đa (VND)
-            </label>
+        <h3>🔍 Bộ lọc tìm nhà trọ</h3>
 
-            <input
-                type="number"
-                id="maxPrice"
-                value="5000000"
-                min="0"
-                placeholder="Ví dụ: 5000000"
-            >
+        <label for="maxPrice">
+            Giá tối đa (VND)
+        </label>
 
-            <label for="minArea">
-                Diện tích tối thiểu (m²)
-            </label>
+        <input
+            type="number"
+            id="maxPrice"
+            value="5000000"
+            min="0"
+            placeholder="Ví dụ: 5000000"
+        >
 
-            <input
-                type="number"
-                id="minArea"
-                value="20"
-                min="0"
-                placeholder="Ví dụ: 20"
-            >
+        <label for="minArea">
+            Diện tích tối thiểu (m²)
+        </label>
 
-            <label for="minPeople">
-                Số người tối thiểu
-            </label>
+        <input
+            type="number"
+            id="minArea"
+            value="20"
+            min="0"
+            placeholder="Ví dụ: 20"
+        >
 
-            <input
-                type="number"
-                id="minPeople"
-                value="1"
-                min="1"
-                placeholder="Ví dụ: 2"
-            >
+        <label for="minPeople">
+            Số người tối thiểu
+        </label>
 
-            <button id="filterBtn">
-                Áp dụng bộ lọc
-            </button>
+        <input
+            type="number"
+            id="minPeople"
+            value="1"
+            min="1"
+            placeholder="Ví dụ: 2"
+        >
 
-        </div>
+        <button id="filterBtn">
+            Áp dụng bộ lọc
+        </button>
+
+    </div>
+
+    <!-- =========================
+         DANH SÁCH NHÀ TRỌ
+    ========================== -->
+
+    <div class="listBox">
+
+        <h3>📋 Danh sách nhà trọ</h3>
+
+        <input
+            type="text"
+            id="searchName"
+            placeholder="🔍 Tìm theo tên nhà trọ..."
+        >
 
         <div class="hint">
             Chọn vị trí trên bản đồ hoặc sử dụng thanh tìm kiếm để tìm nhà trọ gần khu vực mong muốn.
         </div>
 
-        <!-- Danh sách kết quả -->
-
         <div id="list">
 
-            <!-- Ví dụ card mẫu -->
-
-            <!--
-            <div class="card">
-                <h4>Nhà trọ A</h4>
-                <p>Giá: 3.500.000 VND</p>
-                <p>Diện tích: 25 m²</p>
-                <p>Sức chứa: 2 người</p>
-            </div>
-            -->
+            <!-- Danh sách sẽ được render bằng JavaScript -->
 
         </div>
 
     </div>
+
+</div>
 
     <!-- =========================
          MAP

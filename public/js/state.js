@@ -10,7 +10,9 @@ export const state = {
 
   lastLat: null,
 
-  lastLng: null
+  lastLng: null,
+
+  lastResults: []
 
 };
 

@@ -80,7 +80,7 @@ body {
     position: absolute;
 
     top: 80px;
-    left: 70px;
+    right: 20px;
 
     z-index: 1000;
 
@@ -189,7 +189,9 @@ body {
 ========================= */
 
 #list {
-    margin-top: 10px;
+     max-height:320px;
+
+    overflow-y:auto;
 }
 
 /* =========================
@@ -201,9 +203,9 @@ body {
 
     border-radius: 10px;
 
-    padding: 12px;
+    padding: 10px;
 
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
@@ -223,15 +225,15 @@ body {
 .card h4 {
     margin: 0 0 6px 0;
 
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .card p {
-    margin: 4px 0;
+    margin: 2px 0;
 
     color: #555;
 
-    font-size: 14px;
+    font-size: 13px;
 }
 
 /* =========================
@@ -263,10 +265,40 @@ body {
         right: 10px;
     }
 
-    #sidebar {
-        width: calc(100% - 80px);
-        left: 70px;
-        right: 10px;
-        max-height: 60vh;
-    }
+   #sidebar {
+    width: calc(100% - 80px);
+    left: auto;
+    right: 10px;
+    max-height: 60vh;
+}
+}
+
+.listBox{
+
+    margin-top:18px;
+
+    background:#fff;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+}
+
+#searchName{
+
+    width:100%;
+
+    padding:10px;
+
+    box-sizing:border-box;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    margin:10px 0 15px;
+
 }
