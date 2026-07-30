@@ -2,35 +2,64 @@
 
 import { doSearch } from "./search.js";
 
-export function locateUser() {
+let isLocating = false;
 
+export function locateUser() {
   if (!navigator.geolocation) {
-    alert("Trình duyệt không hỗ trợ GPS");
+    alert("Trình duyệt của bạn không hỗ trợ định vị GPS.");
     return;
   }
 
-  navigator.geolocation.getCurrentPosition(
+  if (isLocating) return;
+  isLocating = true;
 
-    pos => {
+  // Cấu hình định vị
+  const options = {
+    enableHighAccuracy: true, // Bật true để lấy vị trí chính xác hơn
+    timeout: 10000,            // Chờ tối đa 10 giây
+    maximumAge: 30000          // Chấp nhận cache trong vòng 30 giây
+  };
 
-      doSearch(
-        pos.coords.latitude,
-        pos.coords.longitude,
-        "Vị trí hiện tại"
-      );
-    },
+  const onSuccess = (pos) => {
+    isLocating = false;
+    doSearch(
+      pos.coords.latitude,
+      pos.coords.longitude,
+      "Vị trí hiện tại"
+    );
+  };
 
-    err => {
+  const onError = (err) => {
+    console.warn("Thử định vị chính xác thất bại, thử lại cấu hình nới lỏng...", err);
 
-      console.error(err);
+    // Nếu lần 1 thất bại (ví dụ do Timeout), thử lại lần 2 với cấu hình nhẹ hơn (Dựa trên IP/Wifi)
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        isLocating = false;
+        doSearch(
+          pos.coords.latitude,
+          pos.coords.longitude,
+          "Vị trí hiện tại"
+        );
+      },
+      (fallbackErr) => {
+        isLocating = false;
+        console.error("Lỗi định vị:", fallbackErr);
 
-      alert("Không lấy được vị trí");
-    },
+        if (fallbackErr.code === fallbackErr.PERMISSION_DENIED) {
+          alert("Bạn đã chặn quyền truy cập vị trí. Vui lòng cho phép ứng dụng truy cập vị trí trên trình duyệt.");
+        } else {
+          alert("Không thể lấy được vị trí hiện tại. Vui lòng kiểm tra lại kết nối mạng hoặc GPS.");
+        }
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 8000,
+        maximumAge: 0
+      }
+    );
+  };
 
-    {
-      enableHighAccuracy: false,
-      timeout: 10000,
-      maximumAge: 60000
-    }
-  );
+  // Gọi lệnh lấy vị trí
+  navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 }

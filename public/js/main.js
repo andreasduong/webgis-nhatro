@@ -11,6 +11,37 @@ import {
 } from "./ui.js";
 import { drawRoute } from "./routing.js";
 
+/* ============================================================
+   HÀM THÊM CHÚ GIẢI BẢN ĐỒ (LEGEND)
+   ============================================================ */
+function initLegend() {
+  if (!map) return;
+
+  const legend = L.control({ position: "bottomleft" });
+
+  legend.onAdd = function () {
+    const div = L.DomUtil.create("div", "legend");
+    div.innerHTML = `
+      <h4>📌 Chú giải</h4>
+      <div class="legend-item">
+        <span class="legend-icon">🔵</span>
+        <span>Nhà trọ / Phòng trống</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-icon">📍</span>
+        <span>Vị trí hiện tại / Tìm kiếm</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-icon">⭕</span>
+        <span>Bán kính tìm kiếm</span>
+      </div>
+    `;
+    return div;
+  };
+
+  legend.addTo(map);
+}
+
 document.addEventListener(
   "DOMContentLoaded",
   async () => {
@@ -25,9 +56,10 @@ document.addEventListener(
 
     }
 
-    /* Khởi tạo */
+    /* Khởi tạo bản đồ & Chú giải */
 
     initMap();
+    initLegend(); // <--- Khởi tạo chú giải ngay sau khi bản đồ sẵn sàng
 
     await loadLocalGeocoder();
 
@@ -235,4 +267,3 @@ document.addEventListener(
 
   }
 );
-
